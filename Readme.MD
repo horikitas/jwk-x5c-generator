@@ -151,3 +151,14 @@ JWT Payload: {
 ## What Your Real-World Flow would look like with managed JWKs
 Read more on why I created this demo here - https://medium.com/@horikitas/designing-trust-managing-jwks-with-x5c-cert-rotation-and-real-world-lifecycles-c0052c4117d3
 ![img.png](img.png)
+
+## RFC References:
+**RFC 7517 — JSON Web Key**
+https://datatracker.ietf.org/doc/html/rfc7517#section-4.7
+
+This implementation follows RFC 7517, which defines the JSON Web Key (JWK) specification, including support for x5c conveying certificate identity alongside cryptographic key material.
+
+**RFC 8414 — OAuth 2.0 Authorization Server Metadata**
+https://datatracker.ietf.org/doc/html/rfc8414
+Describes publishing JWKS at .well-known/jwks.json
+Only needed if you reference dynamic key discovery or plan to scale this out.
