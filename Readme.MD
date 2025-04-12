@@ -147,3 +147,7 @@ JWT Payload: {
   iat: 1744480509
 }
 ```
+
+## What Your Real-World Flow would look like with managed JWKs
+Read more on why I created this demo here - https://medium.com/@horikitas/designing-trust-managing-jwks-with-x5c-cert-rotation-and-real-world-lifecycles-c0052c4117d3
+![img.png](img.png)
