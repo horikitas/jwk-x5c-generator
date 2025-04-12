@@ -1,6 +1,6 @@
 ## Overview
 
-Experimenting with JWKS with x5c - Using nodejs utilities for faster setup. 
+Experimenting with JWKS with x5c - Using Node.js utilities for faster setup. 
 
 ## Step 1: Setup NPM & Install node-jose
 
@@ -151,6 +151,54 @@ JWT Payload: {
 ## What Your Real-World Flow would look like with managed JWKs
 Read more on why I created this demo here - https://medium.com/@horikitas/designing-trust-managing-jwks-with-x5c-cert-rotation-and-real-world-lifecycles-c0052c4117d3
 ![img.png](img.png)
+
+## Few Points On Certificates
+### Next questions naturally any backend engineer working with certificates for the first time would ask is 
+**"What should be the CN of the certificates? Is it the downstream server FQDN?"** Wrong!
+
+- Your **application is the *client***
+
+  It’s the one generating:
+	- Private key 
+	- Public JWK 
+	- Certificate request (CSR) 
+- Your **downstream applicaiton** is the *server*
+
+  They’re:
+	- Receiving your public JWK
+	- Verifying JWTs you generate
+
+So the **JWK and its cert (x5c)** represent **your client application’s identity**
+
+The party that **signs the JWTs**
+
+---
+
+## So... what should the `CN` in the certificate be?
+
+> It should represent the client application — the entity generating the JWT.
+
+
+Because the certificate is:
+- Bound to the **key used to sign** JWTs
+- Attached to the **JWK** published and distributed
+- Not used to represent *who verifies the token*, but *who issues it*
+
+---
+
+## Think of CN like a caller ID:
+
+> The CN is who’s speaking, not who’s listening.
+>
+In your case, your client app is saying:
+
+> “Hey, here’s my JWK. I’m going to sign tokens with this. If you trust my cert (x5c), you can trust this key.”
+>
+
+So the certificate needs to say:
+
+> "I represent client-app-X", not "I’m vendor.com"
+>
 
 ## RFC References:
 **RFC 7517 — JSON Web Key**
